@@ -2,9 +2,15 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username =  db.Column(db.String(20), nullable=False, unique=True)
-    password = db.Column(db.String(256), nullable=False)
+    id          = db.Column(db.Integer, primary_key=True)
+    username    = db.Column(db.String(20), nullable=False, unique=True)
+    password    = db.Column(db.String(256), nullable=False)
+    role        = db.Column(db.String(50), nullable=False)   
+
+    __mapper_args__ = {
+        'polymorphic_on': role,
+        'polymorphic_identity': 'user',
+    }
 
     def __init__(self, username, password):
         self.username = username
@@ -13,7 +19,8 @@ class User(db.Model):
     def get_json(self):
         return{
             'id': self.id,
-            'username': self.username
+            'username': self.username,
+            'role': self.role
         }
 
     def set_password(self, password):
