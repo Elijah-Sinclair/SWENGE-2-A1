@@ -14,3 +14,9 @@ def initialize():
 
     staff = Staff(username='staff1', password='staffpass')
     db.session.add(staff)
+
+    staff = Staff(username='staff2', password='staffpass')
+    db.session.add(staff)
+
+    staff = Staff(username='staff3', password='staffpass')
+    db.session.add(staff)
